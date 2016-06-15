@@ -1,0 +1,32 @@
+<html>
+<head>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Last modified</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% files.forEach(function(file) { %>
+                    <tr>
+                        <td><%= file.Key %></td>
+                        <td><%= file.Size %></td>
+                        <td><%= file.LastModified %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <a href="/upload" class="btn btn-info">
+            Upload...
+        </a>
+    </div>
+</body>
+</html>
