@@ -5,9 +5,9 @@ var awsConfig = require('../config.json'),
 
 const TEMPLATE_NAME = 'upload.ejs';
 
-var fields = prepareFormFields();
-
 exports.action = function (request, callback) {
+	var fields = prepareFormFields(request);
+
 	callback(null, {
 		template: TEMPLATE_NAME, params: {
 			fields: fields,
@@ -17,14 +17,14 @@ exports.action = function (request, callback) {
 };
 
 
-function prepareFormFields() {
+function prepareFormFields(request) {
 	var policyData = {
 		expiration: {day: 1},
 		conditions: [
 			['starts-with', '$key', ''],
 			{bucket: config.bucket},
-			{acl: 'private'},
-			{success_action_redirect: 'http://localhost:8080/uploadSucceeded'},
+			{acl: 'public-read'},
+			{success_action_redirect: 'http://' + request.headers.host + '/uploadSucceeded'},
 			['content-length-range', 0, 1048576]
 		]
 	};
