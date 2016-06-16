@@ -1,0 +1,47 @@
+<html>
+<head>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <div class="container">
+        <div id="section1" class="panel panel-default">
+
+            <div class="panel-heading">
+                <div class="container">
+                    <h3 class="panel-title">Upload a file</h3>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <form class="form-horizontal"
+                      action="https://<%= bucket %>.s3.amazonaws.com/"
+                      method="POST" id="sign-up-form"
+                      enctype="multipart/form-data">
+
+                    <% fields.forEach(function(field){ %>
+                        <input type="hidden" name="<%= field.name %>" value="<%= field.value %>"/>
+                    <% }); %>
+
+                        <div class="col-xs-5 col-sm-12">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Select a file:</label>
+                                <input type="file" name="file">
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-xs-3">
+                            <input type="submit" class="btn  btn-primary btn-block" value="Upload"/>
+                        </div>
+                </form>
+            </div>
+
+            <footer class="panel-footer">
+                <a href="/">&lt;-- list of files</a>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

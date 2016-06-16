@@ -1,3 +1,5 @@
 [
-	{"path":"/","action":"listFiles"}
+	{"path":"/","action":"listFiles"},
+	{"path":"/upload","action":"uploadFiles"},
+	{"path":"/uploadSucceeded","action":"uploadSucceeded"}
 ]
