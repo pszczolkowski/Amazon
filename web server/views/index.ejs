@@ -8,6 +8,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Size</th>
                 <th>Last modified</th>
@@ -16,6 +17,7 @@
             <tbody>
                 <% files.forEach(function(file) { %>
                     <tr>
+                        <td><input type="checkbox" class="file-checkbox" data-file-name="<%= file.Key %>" /></td>
                         <td><%= file.Key %></td>
                         <td><%= file.Size %></td>
                         <td><%= file.LastModified %></td>
@@ -27,6 +29,27 @@
         <a href="/upload" class="btn btn-info">
             Upload...
         </a>
+
+        <form method="post" action="/resize" onsubmit="beforeSubmit()">
+            <input type="number" name="rate" max="200" min="1" value="100" /> %
+            <input type="hidden" name="files" id="file-names-input" />
+            <button type="submit">Resize</button>
+        </form>
+
     </div>
+
+    <script>
+        function beforeSubmit() {
+            var fileNames = [];
+            var checkboxes = document.getElementsByClassName('file-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    fileNames.push(checkboxes[i].getAttribute('data-file-name'));
+                }
+            }
+
+            document.getElementById('file-names-input').value = JSON.stringify(fileNames);
+        }
+    </script>
 </body>
 </html>

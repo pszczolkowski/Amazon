@@ -1,0 +1,24 @@
+<html>
+<head>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <div class="container">
+        <h2>The following files have been scheduled for resizing:</h2>
+
+        <ul class="list-group">
+            <% files.forEach(function(file) { %>
+                <li class="list-group-item">
+                    <%= file %>
+                </li>
+            <% }); %>
+        </ul>
+
+        <br />
+
+        <a href="/">&lt;-- list of files</a>
+
+    </div>
+</body>
+</html>
