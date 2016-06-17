@@ -1,0 +1,10 @@
+{
+  "name": "Image Resizing Worker",
+  "version": "0.0.1",
+  "main": "app.js",
+  "author": "Krzysztof Pszczółkowski <pszczolkowski.k@gmail.com> (https://github.com/pszczolkowski/)",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.0.0-rc13"
+  }
+}
