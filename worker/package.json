@@ -5,6 +5,10 @@
   "author": "Krzysztof Pszczółkowski <pszczolkowski.k@gmail.com> (https://github.com/pszczolkowski/)",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.0.0-rc13"
+    "async": "^2.0.0-rc.6",
+    "aws-sdk": "^2.4.0",
+    "lwip": "0.0.9",
+    "promise": "^7.1.1",
+    "randomstring": "^1.1.5"
   }
 }
