@@ -2,5 +2,6 @@
 	{"path":"/","action":"listFiles"},
 	{"path":"/upload","action":"uploadFiles"},
 	{"path":"/uploadSucceeded","action":"uploadSucceeded"},
-	{"path":"/resize","action":"resize"}
+	{"path":"/resize","action":"resize"},
+	{"path":"/image","action":"viewImage"}
 ]

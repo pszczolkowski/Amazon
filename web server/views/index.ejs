@@ -18,7 +18,9 @@
                 <% files.forEach(function(file) { %>
                     <tr>
                         <td><input type="checkbox" class="file-checkbox" data-file-name="<%= file.Key %>" /></td>
-                        <td><%= file.Key %></td>
+                        <td>
+                            <a href="<%= '/image?src=' + bucket + '/' + file.Key %>"><%= file.Key %></a>
+                        </td>
                         <td><%= file.Size %></td>
                         <td><%= file.LastModified %></td>
                     </tr>

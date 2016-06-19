@@ -15,6 +15,7 @@ exports.action = function (request, callback) {
 		else {
 			callback(null, {
 				template: TEMPLATE_NAME, params: {
+					bucket: config.bucket,
 					files: data.Contents
 				}
 			});
