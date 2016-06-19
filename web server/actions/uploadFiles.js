@@ -25,7 +25,8 @@ function prepareFormFields(request) {
 			{bucket: config.bucket},
 			{acl: 'public-read'},
 			{success_action_redirect: 'http://' + request.headers.host + '/uploadSucceeded'},
-			['content-length-range', 0, 1048576]
+			['content-length-range', 0, 1048576],
+			{'x-amz-meta-uploader-ip': request.ip}
 		]
 	};
 
