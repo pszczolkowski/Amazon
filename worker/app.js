@@ -27,7 +27,7 @@ function waitForMessages() {
 	return new Promise(function (resolve, reject) {
 		var params = {
 			QueueUrl: config.queueUrl,
-			MaxNumberOfMessages: 10,
+			MaxNumberOfMessages: 1,
 			VisibilityTimeout: 30,
 			WaitTimeSeconds: 20
 		};

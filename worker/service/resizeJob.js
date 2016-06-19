@@ -23,17 +23,8 @@ function create(sqsMessage) {
 
 			var taskParams = JSON.parse(sqsMessage.Body);
 
-			var tasks = taskParams.files.map(function (file) {
-				return createSingleResizeJob(file, taskParams.rate / 100);
-			});
-
-			async.series(tasks, function (error) {
-				if (error) {
-					callback(error);
-				} else {
-					callback();
-				}
-			});
+			resize(taskParams.file, taskParams.rate / 100)
+				.then(callback, callback);
 		});
 	};
 }
@@ -45,6 +36,46 @@ function deleteMessage(message, callback) {
 	};
 
 	sqs.deleteMessage(params, callback);
+}
+
+function resize(fileName, rate) {
+	return new Promise(function (resolve, reject) {
+		var fileData = {
+			Bucket: config.bucket,
+			Key: fileName
+		};
+
+		s3.getObject(fileData, function (err, data) {
+			if (err) {
+				reject(err);
+				return;
+			}
+
+			var fileType = getFileTypeFromName(fileName);
+
+			lwip.open(data.Body, fileType, function (err, image) {
+				image.scale(rate, function (err, image) {
+					image.toBuffer(fileType, function (err, buffer) {
+						var params = {
+							Bucket: config.bucket,
+							Key: fileName,
+							Body: buffer,
+							ACL: 'public-read'
+						};
+
+						s3.upload(params, function(err, data) {
+							if (err) {
+								reject(err);
+							} else {
+								logJobSuccess(fileName, rate)
+									.then(resolve);
+							}
+						});
+					});
+				});
+			});
+		});
+	});
 }
 
 function createSingleResizeJob(fileName, rate) {
