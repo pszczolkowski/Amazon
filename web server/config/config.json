@@ -1,0 +1,10 @@
+{
+  "bucket": "pszczolkowski",
+  "queueUrl": "https://sqs.us-west-2.amazonaws.com/983680736795/pszczolkowskiSQS",
+  "port": 8080,
+  "simpleDb": {
+    "domains": {
+      "upload": "pszczolkowski-uploads"
+    }
+  }
+}
