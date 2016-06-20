@@ -60,7 +60,7 @@ function executeMessages(messages) {
 }
 
 function handleError(error) {
-	logError(error);
+	return logError(error);
 }
 
 function logError(error) {
