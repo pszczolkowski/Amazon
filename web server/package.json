@@ -1,9 +1,12 @@
 {
   "name": "Image Resizing Cloud Service",
   "version": "0.0.1",
+  "description": "",
   "main": "app.js",
   "author": "Krzysztof Pszczółkowski <pszczolkowski.k@gmail.com> (https://github.com/pszczolkowski/)",
   "license": "MIT",
+  "readme": "",
+  "repository": "https://github.com/pszczolkowski/Amazon",
   "dependencies": {
     "async": "^0.2.10",
     "aws-sdk": "^2.0.0-rc13",
