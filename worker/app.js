@@ -84,7 +84,9 @@ function logErrorToSimpleDb(error) {
 			ItemName: randomstring.generate(10)
 		};
 
-		AWS.getSimpleDb().putAttributes(params, resolve);
+		AWS.getSimpleDb().putAttributes(params, function () {
+			resolve();
+		});
 	});
 }
 
