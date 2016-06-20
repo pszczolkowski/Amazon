@@ -63,7 +63,7 @@ function resize(fileName, rate) {
 								reject(err);
 							} else {
 								logJobSuccess(fileName, rate)
-									.then(resolve);
+									.then(resolve, reject);
 							}
 						});
 					});
@@ -71,45 +71,6 @@ function resize(fileName, rate) {
 			});
 		});
 	});
-}
-
-function createSingleResizeJob(fileName, rate) {
-	return function (callback) {
-		var fileData = {
-			Bucket: config.bucket,
-			Key: fileName
-		};
-
-		AWS.getS3().getObject(fileData, function (err, data) {
-			if (err) {
-				callback(err);
-				return;
-			}
-
-			var fileType = getFileTypeFromName(fileName);
-
-			lwip.open(data.Body, fileType, function (err, image) {
-				image.scale(rate, function (err, image) {
-					image.toBuffer(fileType, function (err, buffer) {
-						var params = {
-							Bucket: config.bucket,
-							Key: fileName,
-							Body: buffer,
-							ACL: 'public-read'
-						};
-
-						AWS.getS3().upload(params, function(err, data) {
-							if (err) {
-								callback(err);
-							} else {
-								logJobSuccess(fileName, rate).then(callback);
-							}
-						});
-					});
-				});
-			});
-		});
-	}
 }
 
 function getFileTypeFromName(filename) {

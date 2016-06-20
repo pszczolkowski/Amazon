@@ -18,7 +18,9 @@ AWS.loadCredentials().then(function () {
 function main(next) {
 	waitForMessages()
 		.then(executeMessages, handleError)
-		.then(next);
+		.then(next, function (err) {
+			handleError(err).then(next);
+		});
 }
 
 function waitForMessages() {
@@ -58,7 +60,7 @@ function executeMessages(messages) {
 }
 
 function handleError(error) {
-	logError(error).then(next);
+	logError(error);
 }
 
 function logError(error) {
@@ -82,13 +84,7 @@ function logErrorToSimpleDb(error) {
 			ItemName: randomstring.generate(10)
 		};
 
-		AWS.getSimpleDb().putAttributes(params, function (err) {
-			if (err) {
-				reject(err);
-			} else {
-				resolve();
-			}
-		});
+		AWS.getSimpleDb().putAttributes(params, resolve);
 	});
 }
 
