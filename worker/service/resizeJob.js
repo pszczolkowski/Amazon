@@ -1,14 +1,9 @@
 var async = require('async'),
-	AWS = require("aws-sdk"),
+	AWS = require("./aws"),
 	config = require('./../config/config.json'),
 	fs = require('fs'),
 	lwip = require('lwip'),
 	randomstring = require("randomstring");
-
-AWS.config.loadFromPath('./config.json');
-var s3 = new AWS.S3();
-var sqs = new AWS.SQS();
-var simpledb = new AWS.SimpleDB();
 
 exports.create = create;
 
@@ -35,7 +30,7 @@ function deleteMessage(message, callback) {
 		ReceiptHandle: message.ReceiptHandle
 	};
 
-	sqs.deleteMessage(params, callback);
+	AWS.getSqs().deleteMessage(params, callback);
 }
 
 function resize(fileName, rate) {
@@ -45,7 +40,7 @@ function resize(fileName, rate) {
 			Key: fileName
 		};
 
-		s3.getObject(fileData, function (err, data) {
+		AWS.getS3().getObject(fileData, function (err, data) {
 			if (err) {
 				reject(err);
 				return;
@@ -63,7 +58,7 @@ function resize(fileName, rate) {
 							ACL: 'public-read'
 						};
 
-						s3.upload(params, function(err, data) {
+						AWS.getS3().upload(params, function(err, data) {
 							if (err) {
 								reject(err);
 							} else {
@@ -85,7 +80,7 @@ function createSingleResizeJob(fileName, rate) {
 			Key: fileName
 		};
 
-		s3.getObject(fileData, function (err, data) {
+		AWS.getS3().getObject(fileData, function (err, data) {
 			if (err) {
 				callback(err);
 				return;
@@ -103,7 +98,7 @@ function createSingleResizeJob(fileName, rate) {
 							ACL: 'public-read'
 						};
 
-						s3.upload(params, function(err, data) {
+						AWS.getS3().upload(params, function(err, data) {
 							if (err) {
 								callback(err);
 							} else {
@@ -152,7 +147,7 @@ function logJobSuccess(fileName, rate) {
 			ItemName: randomstring.generate(10)
 		};
 
-		simpledb.putAttributes(params, function (err) {
+		AWS.getSimpleDb().putAttributes(params, function (err) {
 			if (err) {
 				reject(err);
 			} else {

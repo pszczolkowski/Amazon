@@ -1,5 +1,5 @@
 var async = require('async'),
-	AWS = require("aws-sdk"),
+	AWS = require('./service/aws'),
 	config = require('./config/config.json'),
 	fs = require('fs'),
 	initializer = require('./service/initializer'),
@@ -8,13 +8,11 @@ var async = require('async'),
 	randomstring = require("randomstring"),
 	ResizeJob = require('./service/resizeJob');
 
-AWS.config.loadFromPath('./config.json');
-var simpledb = new AWS.SimpleDB();
-var sqs = new AWS.SQS();
+AWS.loadCredentials().then(function () {
+	initializer.init();
 
-initializer.init();
-
-async.forever(main);
+	async.forever(main);
+});
 
 
 function main(next) {
@@ -32,7 +30,7 @@ function waitForMessages() {
 			WaitTimeSeconds: 20
 		};
 
-		sqs.receiveMessage(params, function (err, data) {
+		AWS.getSqs().receiveMessage(params, function (err, data) {
 			if (err) {
 				reject(err);
 			} else {
@@ -84,7 +82,7 @@ function logErrorToSimpleDb(error) {
 			ItemName: randomstring.generate(10)
 		};
 
-		simpledb.putAttributes(params, function (err) {
+		AWS.getSimpleDb().putAttributes(params, function (err) {
 			if (err) {
 				reject(err);
 			} else {
