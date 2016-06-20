@@ -9,6 +9,8 @@ AWS.loadCredentials = function () {
 		EC2MCred.refresh(function (err) {
 			if (err) {
 				AWS.config.loadFromPath('./config.json');
+			} else {
+				AWS.config.region = 'us-west-2';
 			}
 
 			s3 = new AWS.S3();
